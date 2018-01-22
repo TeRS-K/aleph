@@ -38,7 +38,7 @@ class Connection:
 
         sql = "INSERT INTO " + table + " Values ("
         for ind in range(0, len(values)):
-            sql+= '"' + values[ind] + '"'
+            sql+= values[ind]
             if ind != len(values) -1:
                 sql+=", "
             else:
@@ -81,7 +81,7 @@ class Connection:
                 if ind != len(conditions) - 1:
                     sql += "and "
 
-        print(sql)
+        print("\n"+sql)
 
         result=""
         try:
@@ -93,3 +93,32 @@ class Connection:
             db.close()
 
         return result
+
+    def delete(self, table, conditions=[]):
+        '''
+        :param table: table name
+        :param conditions: WHERE clause
+        '''
+        db = getConnection(self.ipaddr, self.username, self.password, self.table)
+        cursor = db.cursor()
+
+        sql = "DELETE "
+        sql += "FROM " + table
+
+        if len(conditions) > 0:
+            sql += " WHERE "
+            for ind in range(0, len(conditions)):
+                sql += conditions[ind]
+                if ind != len(conditions) - 1:
+                    sql += "and "
+
+        print("\n"+sql)
+
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except Exception as e:
+            print(e)
+            db.rollback()
+        finally:
+            db.close()

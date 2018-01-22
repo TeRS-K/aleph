@@ -1,11 +1,15 @@
-from db.Connection import Connection
+from db.Connector import Connection
 
 conn = Connection("18.216.32.253", "root", "password", "test")
 
-'''
-values = ["Jane", "Aaron's", "Completely Enamoured"]
+
+values = ["'Felix'", "'V1'", "'Dead'"]
 
 conn.insert("people", values)
-'''
 
-print(conn.query("people", "*", ["status='Depressed'"])[0][:])
+
+
+conn.delete("people", ['''name="Emily"'''])
+
+
+print(conn.query("people", "*"))
