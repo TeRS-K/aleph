@@ -7,11 +7,16 @@ values = ["'David'", "'Duan'"]
 
 conn.insert("Login", rows, values)
 
-
 print(conn.query("Login", "*", conditions=["username <> 'SIU'"] ,order=["username", "ASC"]))
 
 
-conn.delete("Login", ['''username="David"'''])
-
+conn.update("Login", ["username='Poo'", "hashedpw='PLOP'"], ["username='David'"])
 
 print(conn.query("Login", "*"))
+
+
+conn.delete("Login", ['''username="Poo"'''])
+
+print(conn.query("Login", "*"))
+
+

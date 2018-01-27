@@ -52,7 +52,7 @@ class Connection:
             else:
                 sql+= ")"
 
-        print(sql)
+        print("\n" + sql)
 
         try:
             cursor.execute(sql)
@@ -117,8 +117,7 @@ class Connection:
         db = getConnection(self.ipaddr, self.username, self.password, self.database)
         cursor = db.cursor()
 
-        sql = "DELETE "
-        sql += "FROM " + table
+        sql = "DELETE FROM " + table
 
         if len(conditions) > 0:
             sql += " WHERE "
@@ -137,3 +136,43 @@ class Connection:
             db.rollback()
         finally:
             db.close()
+
+
+    def update(self, table, mutate=[], conditions=[]):
+        '''
+        :param table: table to update
+        :param mutate: [column1=new1, column2=new2,....]
+        :param conditions: [username=..., ...]
+        :return: void
+        '''
+
+        db = getConnection(self.ipaddr, self.username, self.password, self.database)
+        cursor = db.cursor()
+
+        sql = "UPDATE " + table + " "
+
+        if len(mutate) > 0:
+            sql += "SET"
+            for ind in range(0, len(mutate)):
+                sql += " " + mutate[ind]
+                if ind != len(mutate) - 1:
+                    sql += ","
+
+        if len(conditions) > 0:
+            sql += " WHERE "
+            for ind in range(0, len(conditions)):
+                sql += conditions[ind]
+                if ind != len(conditions) - 1:
+                    sql += " and "
+
+        print("\n"+sql)
+
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except Exception as e:
+            print(e)
+            db.rollback()
+        finally:
+            db.close()
+
