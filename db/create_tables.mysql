@@ -2,7 +2,7 @@ CREATE TABLE Login (
     userID int NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL,
     hashedpw varchar(255) NOT NULL,
-    PRIMARY KEY (userID)
+    PRIMARY KEY (userID),
 );
 ALTER TABLE Login AUTO_INCREMENT=100001;
 
@@ -10,8 +10,9 @@ ALTER TABLE Login AUTO_INCREMENT=100001;
 CREATE TABLE Friends(
     userID int NOT NULL,
     friendID int NOT NULL,
-    PRIMARY KEY (userID, friendID),
-    FOREIGN KEY (userID) REFERENCES Login (userID)
+    PRIMARY KEY (userID, friendID), 
+    FOREIGN KEY (userID) REFERENCES Login (userID),
+    FOREIGN KEY (friendID) REFERENCES Login (userID),
 );
 
 
@@ -20,7 +21,7 @@ CREATE TABLE Status(
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status int NOT NULL,
     PRIMARY KEY (userID, ts),
-    FOREIGN KEY (userID) REFERENCES Login (userID)
+    FOREIGN KEY (userID) REFERENCES Login (userID),
 );
 
 
@@ -29,7 +30,7 @@ CREATE TABLE Location(
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     location varchar(255) NOT NULL,
     PRIMARY KEY (userID, ts),
-    FOREIGN KEY (userID) REFERENCES Login (userID)
+    FOREIGN KEY (userID) REFERENCES Login (userID),
 );
 
 
@@ -46,6 +47,6 @@ CREATE TABLE AddCode(
     userID int NOT NULL,
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     code varchar(255) NOT NULL,
-    PRIMARY KEY (userID, ts),
+    PRIMARY KEY (userID),
     FOREIGN KEY (userID) REFERENCES Login (userID),
 );
