@@ -8,8 +8,10 @@ values = ["'David'", "'Duan'"]
 conn.insert("Login", rows, values)
 
 
+print(conn.query("Login", "*"))
 
-# conn.delete("people", ['''name="Emily"'''])
+
+conn.delete("Login", ['''username="David"'''])
 
 
 print(conn.query("Login", "*"))
