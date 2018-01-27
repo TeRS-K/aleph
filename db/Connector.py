@@ -1,10 +1,10 @@
 import pymysql
 
-def getConnection(ipaddr, username, password, table):
+def getConnection(ipaddr, username, password, database):
 
     try:
         # Open database connection
-        db = pymysql.connect(ipaddr, username, password, table)
+        db = pymysql.connect(ipaddr, username, password, database)
         print('Successfully Connected!')
 
         return db
@@ -19,11 +19,11 @@ class Connection:
     A Wrapper for the aleph project
     Server is an EC2 instance running CentOS 7
     '''
-    def __init__(self, ipaddr, username, password, table):
+    def __init__(self, ipaddr, username, password, database):
         self.ipaddr = ipaddr
         self.username = username
         self.password = password
-        self.table = table
+        self.database = database
 
 
     def insert(self, table, values):
@@ -33,7 +33,7 @@ class Connection:
         :return: nothing, but inserts values into specified table
         '''
 
-        db = getConnection(self.ipaddr, self.username, self.password, self.table)
+        db = getConnection(self.ipaddr, self.username, self.password, self.database)
         cursor = db.cursor()
 
         sql = "INSERT INTO " + table + " Values ("
@@ -63,7 +63,7 @@ class Connection:
         :param conditions: WHERE clause
         :return: python nested tuple with each tuple being one row
         '''
-        db = getConnection(self.ipaddr, self.username, self.password, self.table)
+        db = getConnection(self.ipaddr, self.username, self.password, self.database)
         cursor = db.cursor()
 
         sql = "SELECT "
@@ -99,7 +99,7 @@ class Connection:
         :param table: table name
         :param conditions: WHERE clause
         '''
-        db = getConnection(self.ipaddr, self.username, self.password, self.table)
+        db = getConnection(self.ipaddr, self.username, self.password, self.database)
         cursor = db.cursor()
 
         sql = "DELETE "

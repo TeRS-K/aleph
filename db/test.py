@@ -1,4 +1,4 @@
-from db.Connector import Connection
+from Connector import Connection
 
 conn = Connection("18.216.32.253", "root", "password", "test")
 
@@ -9,7 +9,7 @@ conn.insert("people", values)
 
 
 
-conn.delete("people", ['''name="Emily"'''])
+# conn.delete("people", ['''name="Emily"'''])
 
 
 print(conn.query("people", "*"))
