@@ -15,9 +15,20 @@ class Hasher:
 
 
 class Coder:
+    '''
+    friend Code generator Class
+    optional work_rate parameter proportional to run time
+    '''
     def __init__(self, work_rate=12):
+        '''
+        :param work_rate: optional, proportional to run-time
+        '''
         self.work_rate=work_rate
 
     def getCode(self, username):
+        '''
+        :param username: username of code giver
+        :return: code in bits
+        '''
         return bcrypt.gensalt(self.work_rate, b'2a')
 
