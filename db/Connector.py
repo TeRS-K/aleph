@@ -26,7 +26,7 @@ class Connection:
         self.database = database
 
 
-    def insert(self, table, values):
+    def insert(self, table, rows, values):
         '''
         :param table:
         :param values:
@@ -36,7 +36,15 @@ class Connection:
         db = getConnection(self.ipaddr, self.username, self.password, self.database)
         cursor = db.cursor()
 
-        sql = "INSERT INTO " + table + " Values ("
+        sql = "INSERT INTO " + table + " ("
+        for ind in range(0, len(rows)):
+            sql+= rows[ind]
+            if ind != len(rows) -1:
+                sql+=", "
+            else:
+                sql+= ")"
+
+        sql+= " Values ("
         for ind in range(0, len(values)):
             sql+= values[ind]
             if ind != len(values) -1:

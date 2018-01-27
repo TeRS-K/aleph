@@ -2,7 +2,7 @@ CREATE TABLE Login (
     userID int NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL,
     hashedpw varchar(255) NOT NULL,
-    PRIMARY KEY (userID)
+    PRIMARY KEY (username, userID)
 );
 ALTER TABLE Login AUTO_INCREMENT=100001;
 
