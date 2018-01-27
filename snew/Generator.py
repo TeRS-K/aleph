@@ -13,3 +13,11 @@ class Hasher:
 
         return key
 
+
+class Coder:
+    def __init__(self, work_rate=12):
+        self.work_rate=work_rate
+
+    def getCode(self, username):
+        return bcrypt.gensalt(self.work_rate, b'2a')
+

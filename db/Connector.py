@@ -125,7 +125,7 @@ class Connection:
             for ind in range(0, len(conditions)):
                 sql += conditions[ind]
                 if ind != len(conditions) - 1:
-                    sql += "and "
+                    sql += " and "
 
         print("\n"+sql)
 
