@@ -1,10 +1,10 @@
 import pymysql
 
-def getConnection(ipaddr, username, password, table):
+def getConnection(ipaddr, username, password, database):
 
     try:
         # Open database connection
-        db = pymysql.connect(ipaddr, username, password, table)
+        db = pymysql.connect(ipaddr, username, password, database)
         print('Successfully Connected!')
 
         return db
