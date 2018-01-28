@@ -164,8 +164,13 @@ def update_location(username, location):
         values = ["{}".format(str(my_id)), "{}".format(location)]
         conn.insert("Location", rows, values)
         try:
-            conn.update("Frequency", ["frequency=frequency+1"], ["userID={}".format(str(my_id)),
-                                                                         "location={}".format(location)])
+            if conn.query("Frequency", ["frequency"], ["userID={}".format(str(my_id)),
+                                                       "location={}".format(location)]):
+                conn.update("Frequency", ["frequency=frequency+1"], ["userID={}".format(str(my_id)),
+                                                                        "location={}".format(location)])
+            else:   
+                 conn.insert("Frequency", ["userID", "location", "frequency"], 
+                                          ["{}".format(str(my_id)), "{}".format(location), "1"])                                                         
         except Exception as e:
             print(e)
 
