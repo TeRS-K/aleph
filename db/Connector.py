@@ -57,9 +57,11 @@ class Connection:
         try:
             cursor.execute(sql)
             db.commit()
+            return 1
         except Exception as e:
             print(e)
-            db.rollback()
+            db.rollback(
+            return 0
         finally:
             db.close()
 
@@ -134,9 +136,11 @@ class Connection:
         try:
             cursor.execute(sql)
             db.commit()
+            return 1
         except Exception as e:
             print(e)
             db.rollback()
+            return 0
         finally:
             db.close()
 
@@ -173,9 +177,11 @@ class Connection:
         try:
             cursor.execute(sql)
             db.commit()
+            return 1
         except Exception as e:
             print(e)
             db.rollback()
+            return 0
         finally:
             db.close()
 
