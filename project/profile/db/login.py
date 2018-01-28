@@ -19,10 +19,8 @@ def login(username, password):
 
         if (pw == hashed):
             print("Log in success!")
-            return (username)
         else:
             print("Invalid combination.")
-            return (-1)
     
     except Exception as e:
         #!!!!!! pop-up !!!!!!
