@@ -176,3 +176,10 @@ class Connection:
         finally:
             db.close()
 
+    def debugging(self):
+        print(self.query('Login', '*'))
+        print(self.query('Friends', '*'))
+        print(self.query('Location', '*'))
+        print(self.query('Status', '*'))
+        print(self.query('AddCode', '*'))
+    

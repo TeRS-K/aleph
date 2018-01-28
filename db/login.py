@@ -1,5 +1,6 @@
 from Connector import Connection
-
+from snew.Generator import Hasher
+hasher = Hasher()
 conn = Connection("18.216.32.253", "root", "password", "test")
 
 def submit_info(username, password):
@@ -11,20 +12,25 @@ def submit_info(username, password):
     Performs log in function.
     submit username and password to the server.
     """
-    input_info = [username, password]
+    hashed = repr(hasher.hash(username[1:-1], password))
+    
     try: 
-        pw = conn.query('Login', ["hashedpw"], ['''username=''' + input_info[0]])
-        if (pw[0][0] == input_info[1]):
+        pw = conn.query('Login', ["hashedpw"], ['''username='''+username])
+        print(pw[0][0])
+        print(hashed)
+        if (repr(pw[0][0]) == hashed):
             print("Log in success!")
         else:
             print("Invalid combination.")
     
     except Exception as e:
-        # pop-up
+        # pop-up 
+        print(e)
         print("Does not exist")
 
 
+submit_info("'David'", "'PWDavid'")
+submit_info("'David'", "'Wrong'")
 
-
-
+conn.debugging()
 

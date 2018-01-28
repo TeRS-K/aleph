@@ -11,7 +11,7 @@ class Hasher:
                          desired_key_bytes=self.desired_key_bytes,
                          rounds=self.rounds)
 
-        return key
+        return str(key, 'latin-1')
 
 
 class Coder:
@@ -30,5 +30,5 @@ class Coder:
         :param username: username of code giver
         :return: code in bits
         '''
-        return bcrypt.gensalt(self.work_rate, b'2a')
+        return str(bcrypt.gensalt(self.work_rate, b'2a'), 'latin-1')
 
