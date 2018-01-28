@@ -9,7 +9,7 @@ class Hasher:
         hash = SHA3_512.new()
         hash.update(password.encode())
 
-        return hash.hexdigest()
+        return repr(hash.hexdigest())
 
 
 class Coder:
