@@ -1,12 +1,12 @@
 import bcrypt
-from Crypto.Hash import SHA512
+from Crypto.Hash import SHA3_512
 
 class Hasher:
     def __init__(self):
         pass
 
     def hash(self, password):
-        hash = SHA512.new()
+        hash = SHA3_512.new()
         hash.update(password.encode())
 
         return hash.hexdigest()

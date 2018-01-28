@@ -1,5 +1,5 @@
 bcrypt
-pycrypto
+pycryptodome
 
 # Ubuntu
 # sudo apt-get install build-essential libffi-dev python-dev
