@@ -3,33 +3,31 @@ from snew.Generator import Hasher
 hasher = Hasher()
 conn = Connection("18.216.32.253", "root", "password", "test")
 
-def submit_info(username, password):
+def login(username, password):
     """
-    submit_info("'David'", 'Duan')
-    submit_info("'David'", 'x')
-    submit_info("'fail'", 'fail')
-
     Performs log in function.
-    submit username and password to the server.
+    Submit username and password to the server. 
+    The server compares the password with the stored one.
+    If true, login.status = success.
+    If false, website gives a pop-up and the input form is cleared.
     """
+    # compute the hash value for the given password.
     hashed = hasher.hash(password)
     try: 
-        pw = conn.query('Login', ["hashedpw"], ['''username='''+username])
-        print(repr(pw[0][0]))
-        print(hashed)
-        if (repr(pw[0][0]) == hashed):
+        # extract the stored hash value from the database.
+        pw = repr(conn.query('Login', ["hashedpw"], ['''username='''+username])[0][0])
+
+        if (pw == hashed):
             print("Log in success!")
         else:
             print("Invalid combination.")
     
     except Exception as e:
-        # pop-up 
-        print(e)
-        print("Does not exist")
+        #!!!!!! pop-up !!!!!!
+        print("""Fail - function = login
+                 Possible reason: 
+                 1. Username does not exist.
+                 2. Password is incorrect.""")
 
 
-submit_info("'David'", "'PWDavid'")
-submit_info("'David'", "'Wrong'")
-
-conn.debugging()
 

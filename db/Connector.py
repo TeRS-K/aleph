@@ -183,3 +183,9 @@ class Connection:
         print(self.query('Status', '*'))
         print(self.query('AddCode', '*'))
     
+    def deleteall(self):
+        self.delete("Login")
+        self.delete("Friends")
+        self.delete("Location")
+        self.delete("Status")
+        self.delete("Addcode")

@@ -1,27 +1,8 @@
-"""
-friend name listed
-
-fetch friend.status
-fetch friend.location
-update self.status
-update self.location
-
-add friend
-wait for Felix's wrapper for code
-
-delete friend
-
-delete account 
-
-send location using google map api
-text api send message 
-
-count function as reinforcement learning
-
-"""
 from Connector import Connection
 from snew.Generator import Hasher, Coder
 from datetime import datetime, timedelta 
+from login import login
+from registration import new_user
 
 hasher = Hasher()
 coder = Coder()
@@ -258,7 +239,7 @@ def auto_deletion():
     conn.delete("AddCode", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
     conn.delete("Status", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
 
-c = generate_code("'David'")
-add_friend("'Felix'", c)
 
-    
+
+conn.debugging()
+generate_code()
