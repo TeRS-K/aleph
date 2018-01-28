@@ -1,0 +1,7 @@
+bcrypt
+
+# Ubuntu
+# sudo apt-get install build-essential libffi-dev python-dev
+
+# Fedora/CentOS
+# sudo yum install gcc libffi-devel python-devel
