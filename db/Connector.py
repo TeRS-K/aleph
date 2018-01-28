@@ -26,7 +26,7 @@ class Connection:
         self.database = database
 
 
-    def insert(self, table, values):
+    def insert(self, table, rows, values):
         '''
         :param table:
         :param values:
@@ -36,7 +36,15 @@ class Connection:
         db = getConnection(self.ipaddr, self.username, self.password, self.database)
         cursor = db.cursor()
 
-        sql = "INSERT INTO " + table + " Values ("
+        sql = "INSERT INTO " + table + " ("
+        for ind in range(0, len(rows)):
+            sql+= rows[ind]
+            if ind != len(rows) -1:
+                sql+=", "
+            else:
+                sql+= ")"
+
+        sql+= " Values ("
         for ind in range(0, len(values)):
             sql+= values[ind]
             if ind != len(values) -1:
@@ -44,7 +52,7 @@ class Connection:
             else:
                 sql+= ")"
 
-        print(sql)
+        print("\n" + sql)
 
         try:
             cursor.execute(sql)
@@ -56,7 +64,7 @@ class Connection:
             db.close()
 
 
-    def query(self, table, columns, conditions=[]):
+    def query(self, table, columns, conditions=[], order=[]):
         '''
         :param table: table name
         :param columns: columns to query
@@ -75,11 +83,18 @@ class Connection:
         sql += " FROM " + table
 
         if len(conditions)>0:
-            sql += " WHERE "
+            sql += " WHERE"
             for ind in range(0,len(conditions)):
-                sql += conditions[ind]
+                sql += " " + conditions[ind]
                 if ind != len(conditions) - 1:
-                    sql += "and "
+                    sql += "and"
+
+        if len(order)>0:
+            sql += " ORDER BY"
+            for ind in range(0,len(order)):
+                sql += " " + order[ind]
+                if ind < len(order) - 2:
+                    sql += ","
 
         print("\n"+sql)
 
@@ -102,15 +117,14 @@ class Connection:
         db = getConnection(self.ipaddr, self.username, self.password, self.database)
         cursor = db.cursor()
 
-        sql = "DELETE "
-        sql += "FROM " + table
+        sql = "DELETE FROM " + table
 
         if len(conditions) > 0:
             sql += " WHERE "
             for ind in range(0, len(conditions)):
                 sql += conditions[ind]
                 if ind != len(conditions) - 1:
-                    sql += "and "
+                    sql += " and "
 
         print("\n"+sql)
 
@@ -122,3 +136,43 @@ class Connection:
             db.rollback()
         finally:
             db.close()
+
+
+    def update(self, table, mutate=[], conditions=[]):
+        '''
+        :param table: table to update
+        :param mutate: [column1=new1, column2=new2,....]
+        :param conditions: [username=..., ...]
+        :return: void
+        '''
+
+        db = getConnection(self.ipaddr, self.username, self.password, self.database)
+        cursor = db.cursor()
+
+        sql = "UPDATE " + table + " "
+
+        if len(mutate) > 0:
+            sql += "SET"
+            for ind in range(0, len(mutate)):
+                sql += " " + mutate[ind]
+                if ind != len(mutate) - 1:
+                    sql += ","
+
+        if len(conditions) > 0:
+            sql += " WHERE "
+            for ind in range(0, len(conditions)):
+                sql += conditions[ind]
+                if ind != len(conditions) - 1:
+                    sql += " and "
+
+        print("\n"+sql)
+
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except Exception as e:
+            print(e)
+            db.rollback()
+        finally:
+            db.close()
+

@@ -2,14 +2,21 @@ from Connector import Connection
 
 conn = Connection("18.216.32.253", "root", "password", "test")
 
+rows = ["username", "hashedpw"]
+values = ["'David'", "'Duan'"]
 
-values = ["'Felix'", "'V1'", "'Dead'"]
+conn.insert("Login", rows, values)
 
-conn.insert("people", values)
-
-
-
-# conn.delete("people", ['''name="Emily"'''])
+print(conn.query("Login", "*", conditions=["username <> 'SIU'"] ,order=["username", "ASC"]))
 
 
-print(conn.query("people", "*"))
+conn.update("Login", ["username='Poo'", "hashedpw='PLOP'"], ["username='David'"])
+
+print(conn.query("Login", "*"))
+
+
+conn.delete("Login", ['''username="Poo"'''])
+
+print(conn.query("Login", "*"))
+
+
