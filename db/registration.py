@@ -5,8 +5,8 @@ conn = Connection("18.216.32.253", "root", "password", "test")
 
 def create_new(username, password):
     rows = ["username", "hashedpw"]
-    hashed = hasher.hash(username[1:-1], password)
-    values = ['{}'.format(username), hashed]
+    hashed = hasher.hash(password)
+    values = ['{}'.format(username), '{}'.format(hashed)]
     try: 
         conn.insert("Login", rows, values)
     except Exception as e:
@@ -26,4 +26,4 @@ create_new("'Emily'", "'PWEmily'")
 create_new("'Teresa'", "'PWTeresa'")
 
 conn.debugging()
-conn.delete("Login")
+#conn.delete("Login")

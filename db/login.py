@@ -12,11 +12,10 @@ def submit_info(username, password):
     Performs log in function.
     submit username and password to the server.
     """
-    hashed = repr(hasher.hash(username[1:-1], password))
-    
+    hashed = hasher.hash(password)
     try: 
         pw = conn.query('Login', ["hashedpw"], ['''username='''+username])
-        print(pw[0][0])
+        print(repr(pw[0][0]))
         print(hashed)
         if (repr(pw[0][0]) == hashed):
             print("Log in success!")
