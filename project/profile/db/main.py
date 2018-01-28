@@ -4,8 +4,8 @@ Imported all the function from separate files.
 Also provided test cases and type contract
 """
 
-from Connector import Connection
-from snew.Generator import Hasher
+from .Connector import Connection
+from .snew.Generator import Hasher
 
 
 def guessLocation(userID):

@@ -1,5 +1,5 @@
-from Connector import Connection
-from snew.Generator import Hasher
+from .Connector import Connection
+from .snew.Generator import Hasher
 hasher = Hasher()
 conn = Connection("18.216.32.253", "root", "password", "test")
 
@@ -16,15 +16,19 @@ def new_user(username, password):
     """
     rows = ["username", "hashedpw"]
     hashed = hasher.hash(password)
-    values = ['{}'.format(username), '{}'.format(hashed)]
+    values = ["'{}'".format(username), "{}".format(hashed)]
 
     try: 
         # Try to insert the values into rows.
         conn.insert("Login", rows, values)
+        conn.debugging()
+        return 1
     except Exception as e:
         # !!!!! pop-up !!!!!
         # !!!!! clear form !!!!!
         print("""Fail - function = new_user
                  Possible reasons:
                  1. Username already exists.""")
+        conn.debugging()
+        return 0
 

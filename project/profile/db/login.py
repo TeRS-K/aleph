@@ -1,5 +1,5 @@
-from Connector import Connection
-from snew.Generator import Hasher
+from .Connector import Connection
+from .snew.Generator import Hasher
 hasher = Hasher()
 conn = Connection("18.216.32.253", "root", "password", "test")
 
@@ -16,11 +16,14 @@ def login(username, password):
     try: 
         # extract the stored hash value from the database.
         pw = repr(conn.query('Login', ["hashedpw"], ['''username='''+username])[0][0])
-
+        print(pw)
+        print(hashed)
         if (pw == hashed):
             print("Log in success!")
+            return username
         else:
             print("Invalid combination.")
+            return -1
     
     except Exception as e:
         #!!!!!! pop-up !!!!!!
@@ -28,6 +31,6 @@ def login(username, password):
                  Possible reason: 
                  1. Username does not exist.
                  2. Password is incorrect.""")
-
+        return -1
 
 
