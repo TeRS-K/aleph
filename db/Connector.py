@@ -64,7 +64,7 @@ class Connection:
             db.close()
 
 
-    def query(self, table, columns, conditions=[], order=[]):
+    def query(self, table, columns=[], conditions=[], order=[]):
         '''
         :param table: table name
         :param columns: columns to query
@@ -75,19 +75,22 @@ class Connection:
         cursor = db.cursor()
 
         sql = "SELECT "
-        for ind in range(0,len(columns)):
-            sql += columns[ind]
-            if ind != len(columns) - 1:
-                sql += ", "
+        if( isinstance(columns, list) ):
+            for ind in range(0,len(columns)):
+                sql += columns[ind]
+                if ind != len(columns) - 1:
+                    sql += ", "
+        else:
+            sql+= columns
 
         sql += " FROM " + table
 
         if len(conditions)>0:
-            sql += " WHERE"
+            sql += " WHERE "
             for ind in range(0,len(conditions)):
-                sql += " " + conditions[ind]
+                sql += conditions[ind]
                 if ind != len(conditions) - 1:
-                    sql += "and"
+                    sql += " and "
 
         if len(order)>0:
             sql += " ORDER BY"

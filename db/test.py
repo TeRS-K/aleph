@@ -1,4 +1,5 @@
 from Connector import Connection
+from main import guessLocation
 
 conn = Connection("18.216.32.253", "root", "password", "test")
 
@@ -19,4 +20,7 @@ conn.delete("Login", ['''username="Poo"'''])
 
 print(conn.query("Login", "*"))
 
+print(guessLocation(100113))
 
+
+print(conn.query("Frequency", ["frequency"], ["userID=100113", "location='MC'"]))

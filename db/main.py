@@ -7,9 +7,13 @@ Also provided test cases and type contract
 from Connector import Connection
 from snew.Generator import Hasher
 
-from login import login
-"""
-declaration: submit_info (username, password) 
-function: performs authentication by comparing the given password with the stored password.
-"""
 
+def guessLocation(userID):
+    '''
+    :param userID: userID of user who's location is being updated
+    :return: top 5 choices
+    '''
+
+    conn = Connection("18.216.32.253", "root", "password", "test")
+    past_choices = conn.query("Frequency", "location", conditions=["userID = {}".format(userID)], order=["frequency", "DESC"])
+    return past_choices[:min(5,len(past_choices))]
