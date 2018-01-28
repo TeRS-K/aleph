@@ -47,8 +47,9 @@ def fetch_friend_status(username, friend):
                 print(status) ## status, time
                 return status    
             except Exception as e:
-                print("Failed last step of fetch_friend_status")
-                print(e)
+                # When we don't have corresponding information, we return DNE.
+                print("No idea")
+                return "DNE"
 
         except Exception as e:
             print("Fail: fetch_friend_status - You two are not friends.")
@@ -82,8 +83,9 @@ def fetch_friend_location(username, friend):
                 print(location) ## location, time
                 return location    
             except Exception as e:
-                print("Failed last step of fetch_friend_location")
-                print(e)
+                # When we don't have corresponding information, we return DNE.
+                print("No idea")
+                return "DNE"
 
         except Exception as e:
             print("Fail: fetch_friend_status - You two are not friends.")
@@ -97,11 +99,17 @@ def delete_account(username):
     "This process is invertible; type the following statement to proceed...""
     This deletes the current account.
     """
-    confirmation = input()
-    if (confirmation == "Y"):
-        conn.delete("Login", ['''username={}'''.format(username)])
-    
-    # check if other table has updated as well.
+    # confirmation = input()
+    #if (confirmation == "Y"):
+    my_id = name_to_id(username)
+
+    conn.delete("Location", ['''userID={}'''.format(str(my_id))])
+    conn.delete("Status", ['''userID={}'''.format(str(my_id))])
+    conn.delete("AddCode", ['''userID={}'''.format(str(my_id))])
+    conn.delete("Friends", ['''userID={}'''.format(str(my_id))])
+    conn.delete("Friends", ['''friendID={}'''.format(str(my_id))])
+    conn.delete("Frequency", ['''userID={}'''.format(str(my_id))])
+    conn.delete("Login", ['''username={}'''.format(username)])
 
 def delete_friend(username, friend):
     """
@@ -113,13 +121,12 @@ def delete_friend(username, friend):
         friend_id = name_to_id(friend)
         my_id = name_to_id(username)
         try:
-            # print(conn.query('Friends', ["friendID"], ['''userID=''' + str(my_id)]))
             is_friend = conn.query('Friends', ["friendID"], ['''userID=''' + str(my_id)])
             try:
                 # confirmation: pop_up
                 # confirmation = input()
                 conn.delete("Friends", ['''userID=''' + str(my_id), '''friendID=''' + str(friend_id)])
-                print("removed.")
+                conn.delete("Friends", ['''userID=''' + str(friend_id), '''friendID=''' + str(my_id)])
   
             except Exception as e:
                 print(e)
@@ -134,13 +141,16 @@ def delete_friend(username, friend):
         print("Friend does not exist.")
 
 def get_all_friends(username):
+    """
+    Return a list of userIDs who are friends of <username>
+    """
     try:
         my_id = name_to_id(username)
         friend_list = conn.query('Friends', ["friendID"], ['''userID={}'''.format(str(my_id))])
         output = []
         for i in friend_list:
             output.append(i[0])
-        print(output)
+        return output # a list
     except:
         print("Fail: get_all_friends")
 
@@ -151,10 +161,19 @@ def update_location(username, location):
     try: 
         my_id = name_to_id(username)
         rows = ["userID", "location"]
-        values = ["{}".format(str(my_id)), 
-                  "{}".format(location)]
+        values = ["{}".format(str(my_id)), "{}".format(location)]
         conn.insert("Location", rows, values)
-        print("Done: update_location")
+        try:
+            print(int(conn.query("Frequency", ["frequency"], ['''userID={}'''.format(str(my_id)),
+                                                                    '''location={}'''.format(location)])))
+        except Exception as e:
+            print(e)
+            frequency = 0
+        finally:
+            frequency += 1
+            rows = ["userID", "location", "frequency"]
+            values = ["{}".format(str(my_id)), "{}".format(location), "{}".format(frequency)]
+            conn.insert("Frequency", rows, values)
     except Exception as e:
         print(e)
         print("Fail: update_location")
@@ -166,10 +185,9 @@ def update_status(username, status):
     try: 
         my_id = name_to_id(username)
         rows = ["userID", "status"]
-        values = ["{}".format(str(my_id)), 
-                  "{}".format(status)]
+        values = ["{}".format(str(my_id)), "{}".format(status)]
         conn.insert("Status", rows, values)
-        print("Done: update_status")
+
     except Exception as e:
         print(e)
         print("Fail: update_status")
@@ -182,7 +200,7 @@ def fetch_my_status(username):
         my_id = name_to_id(username)
         status = conn.query('Status', ["status", "ts"], conditions=['''userID=''' + str(my_id)], 
                                     order=["{}".format('ts'), "DESC"])[0]
-        print(status)
+        return status
                                 
     except Exception as e:
         print(e)
@@ -196,50 +214,69 @@ def fetch_my_location(username):
         my_id = name_to_id(username)
         location = conn.query('Location', ["location", "ts"], conditions=['''userID=''' + str(my_id)], 
                                     order=["{}".format('ts'), "DESC"])[0]
-        print(location)
+        return location
                                 
     except Exception as e:
         print(e)
         print("Fail: fetch_my_status")
 
 def generate_code(username):
+    """
+    Generate the secret code to add friends.
+    """
     try: 
         my_id = name_to_id(username)
+        
+        # The previous key becomes invalid.
         conn.delete('AddCode', ['''userID={}'''.format(my_id)])
+
+        # generate secret code
         my_code = repr(coder.getCode(username))
+
+        # insert code into the table
         rows = ["userID", "code"]
-        values = ["{}".format(username), "{}".format(my_code)]
+        values = ["{}".format(my_id), "{}".format(my_code)]
         conn.insert("AddCode", rows, values)
+
+        return my_code
+
     except Exception as e:
-        print(e)
-        print("Fail: generate_code")
+        print("Fail - function = generate_code")
 
 def add_friend(username, mycode):
-    my_id = name_to_id(username)
+    """
+    Add new friends using the code generated.
+    """
+    my_id = name_to_id(username)    
     friend_id = conn.query('AddCode', ["userID"], 
-              conditions=['''code={}'''.format(mycode)])
-    print(my_id, friend_id)
+              conditions=['''code={}'''.format(mycode)])[0][0]
     
+    # Add my new friend to my friend list.
     rows = ["userID", "friendID"]
     values = ["{}".format(my_id), "{}".format(friend_id)]
     conn.insert("Friends", rows, values)
 
+    # Add me to my new friend's friend list.
     rows = ["userID", "friendID"]
     values = ["{}".format(friend_id), "{}".format(my_id)]
     conn.insert("Friends", rows, values)
 
+    # The code is no logner valid.
     conn.delete("AddCode", ['''userID={}'''.format(friend_id)])
 
-    print(conn.query("Friends", "*"))
-    print(conn.query("AddCode", "*"))
-
 def auto_deletion():
-    # (ID, datetime.datetime.obj, detail)
+    """
+    This function deletes everything that's no longer relevant,
+    including location info, status info, and personalized code.
+    """
     conn.delete("Location", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
     conn.delete("AddCode", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
     conn.delete("Status", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
 
-
-
-conn.debugging()
-generate_code()
+update_location("'Felix'", "'MC'")
+update_location("'Felix'", "'MC'")
+update_location("'Felix'", "'MC'")
+update_location("'Felix'", "'MC'")
+update_location("'Felix'", "'MC'")
+update_location("'Felix'", "'MC'")
+update_location("'Felix'", "'MC'")
