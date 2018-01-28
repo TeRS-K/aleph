@@ -29,7 +29,7 @@ def verify(request):
         template = loader.get_template('profile/login.html')
     else:
         messages.info(request, "OK")
-        template = loader.get_template('profile/index.html')
+        template = loader.get_template('profile/verify.html')
     
     return HttpResponse(template.render())
 
