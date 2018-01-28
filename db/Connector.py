@@ -60,7 +60,7 @@ class Connection:
             return 1
         except Exception as e:
             print(e)
-            db.rollback(
+            db.rollback()
             return 0
         finally:
             db.close()
