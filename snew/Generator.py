@@ -1,17 +1,15 @@
 import bcrypt
+from Crypto.Hash import SHA512
 
 class Hasher:
-    def __init__(self, desired_key_bytes=16, rounds=300):
-        self.desired_key_bytes = desired_key_bytes
-        self.rounds = rounds
+    def __init__(self):
+        pass
 
-    def hash(self, username, password):
-        key = bcrypt.kdf(password=password.encode(),
-                         salt=username.encode(),
-                         desired_key_bytes=self.desired_key_bytes,
-                         rounds=self.rounds)
+    def hash(self, password):
+        hash = SHA512.new()
+        hash.update(password.encode())
 
-        return str(key, 'latin-1')
+        return hash.hexdigest()
 
 
 class Coder:
