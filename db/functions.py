@@ -164,16 +164,11 @@ def update_location(username, location):
         values = ["{}".format(str(my_id)), "{}".format(location)]
         conn.insert("Location", rows, values)
         try:
-            print(int(conn.query("Frequency", ["frequency"], ['''userID={}'''.format(str(my_id)),
-                                                                    '''location={}'''.format(location)])))
+            conn.update("Frequency", ["frequency=frequency+1"], ["userID={}".format(str(my_id)),
+                                                                         "location={}".format(location)])
         except Exception as e:
             print(e)
-            frequency = 0
-        finally:
-            frequency += 1
-            rows = ["userID", "location", "frequency"]
-            values = ["{}".format(str(my_id)), "{}".format(location), "{}".format(frequency)]
-            conn.insert("Frequency", rows, values)
+
     except Exception as e:
         print(e)
         print("Fail: update_location")
@@ -272,11 +267,3 @@ def auto_deletion():
     conn.delete("Location", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
     conn.delete("AddCode", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
     conn.delete("Status", ['''ts < (NOW() - INTERVAL 10 MINUTE)'''])
-
-update_location("'Felix'", "'MC'")
-update_location("'Felix'", "'MC'")
-update_location("'Felix'", "'MC'")
-update_location("'Felix'", "'MC'")
-update_location("'Felix'", "'MC'")
-update_location("'Felix'", "'MC'")
-update_location("'Felix'", "'MC'")

@@ -185,6 +185,7 @@ class Connection:
         print(self.query('Location', '*'))
         print(self.query('Status', '*'))
         print(self.query('AddCode', '*'))
+        print(self.query('Frequency', '*'))
     
     def deleteall(self):
         self.delete("Login")
@@ -192,3 +193,4 @@ class Connection:
         self.delete("Location")
         self.delete("Status")
         self.delete("Addcode")
+        self.delete('Frequency')

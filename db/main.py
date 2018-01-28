@@ -13,7 +13,6 @@ def guessLocation(userID):
     :param userID: userID of user who's location is being updated
     :return: top 5 choices
     '''
-
     conn = Connection("18.216.32.253", "root", "password", "test")
     past_choices = conn.query("Frequency", "location", conditions=["userID = {}".format(userID)], order=["frequency", "DESC"])
     return past_choices[:min(5,len(past_choices))]
