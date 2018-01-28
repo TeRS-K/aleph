@@ -19,22 +19,25 @@
 
 <body class="bg-dark">
 
-  <div class="container">
-    <div class="card card-login mx-auto mt-5">
-      <div class="card-header" align="center">Click the link below or wait for 15 seconds</div>
-      <div class="card-body"></div>
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
 
-    <div class="text-center">
-        <a class="Big" href="/profile/index/"><u>Link to the main page</u></a>
+    <div class="container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header" align="center">Click the link below or wait for 15 seconds</div>
+            <div class="card-body"></div>
+
+            <div class="text-center">
+                <a class="Big" href="/profile/main/"><u>Link to the main page</u></a>
+            </div>
+        </div>
     </div>
-      </div>
-    </div>
-  </div>
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+     <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 </body>
 
 </html>

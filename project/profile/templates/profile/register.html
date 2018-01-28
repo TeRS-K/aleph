@@ -14,20 +14,14 @@
   <!-- Custom fonts for this template-->
   <link rel="stylesheet" type="text/css" href="{% static 'profile/bootstrap/vendor/font-awesome/css/font-awesome.min.css' %}" />
   <!-- Custom styles for this template-->
-
-
 </head>
 
 <body class="bg-dark">
 
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+
   <div class="container">
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>

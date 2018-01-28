@@ -26,12 +26,14 @@ def verify(request):
 
     if (db_login.login(username, password) == -1):
         messages.info(request, "Failed")
-        template = loader.get_template('profile/login.html')
+        return render(request, "profile/login.html")
+        # template = loader.get_template('profile/login.html')
     else:
         messages.info(request, "OK")
-        template = loader.get_template('profile/verify.html')
+        return render(request, "profile/verify.html")
+        # template = loader.get_template('profile/verify.html')
     
-    return HttpResponse(template.render())
+    return HttpResponse("LMAO")
 
 def register(request):
     template = loader.get_template('profile/register.html')
@@ -45,17 +47,18 @@ def new_user(request):
 
     username = "{}".format(request.POST['username'])
     password = request.POST['password']
-    print(username, password)
     template = ""
 
-    if (db_registration.new_user(username, password) == 1):
+    val = db_registration.new_user(username, password)
+    print(val)
+    if (val == 1):
         messages.info(request, "OK")
-        template = loader.get_template('profile/login.html')
+        # template = loader.get_template('profile/login.html')
+        return render(request, 'profile/login.html')
     else:
-        messages.info(request, "Shit")
-        template = loader.get_template('profile/register.html')
-    
-    return HttpResponse(template.render())
+        messages.info(request, "Fail")
+        # template = loader.get_template('profile/register.html')
+        return render(request, 'profile/register.html')
 
 # logout function
 def logout(request):
@@ -64,10 +67,8 @@ def logout(request):
     return HttpResponse(template.render())
 
 def index(request):
-    # Get an HttpRequest - the request parameter
-    # perform operations using information from the request.
-    # Return HttpResponse
-    return HttpResponse('Hello from Django!')
+    template = loader.get_template('/profile/static/profile/bootstrap/main.html')
+    return HttpResponse(template.render())
 
 
 
