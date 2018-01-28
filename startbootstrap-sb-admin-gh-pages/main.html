@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>SB Admin - Start Bootstrap Template</title>
+  <title>Aleph Bootstrap</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -19,7 +19,7 @@
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-  <!-- Navigation-->
+ <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="main.html">Aleph</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,19 +55,22 @@
               <a href="navbar.html">Navbar</a>
             </li> -->
             <li>
-              <a href="cards.html">Cards</a>
+              <a href="frequentlocation.html">Most Frequent Locations</a>
+            </li>
+            <li>
+              <a href="deleteaccount.html">Delete Account</a>
             </li>
             <li>
               <a href="help.html">Help</a>
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My Account">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMyAccountPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Example Pages</span>
+            <span class="nav-link-text">My Account</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+          <ul class="sidenav-second-level collapse" id="collapseMyAccountPages">
             <li>
               <a href="login.html">Login Page</a>
             </li>
@@ -131,7 +134,7 @@
 
 
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-envelope"></i>
             <span class="d-lg-none">Messages
@@ -161,10 +164,14 @@
               <span class="small float-right text-muted">11:21 AM</span>
               <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
             </a>
+
+
             <div class="dropdown-divider"></div>
             <a class="dropdown-item small" href="#">View all messages</a>
           </div>
         </li>
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
@@ -219,7 +226,7 @@
               </span>
             </div>
           </form>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
@@ -228,20 +235,22 @@
     </div>
   </nav>
 
+
 <!-- main page -->
   <div class="content-wrapper">
     <div class="container-fluid">
+
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Updates</a>
         </li>
-        <li class="breadcrumb-item active">My Friends</li>
+        <li class="breadcrumb-item active">My Location</li>
       </ol>
 
 
       <!-- Icon Cards-->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-xl-3 col-sm-6 mb-3">
           <div class="card text-white bg-primary o-hidden h-100">
             <div class="card-body">
@@ -306,7 +315,7 @@
             </a>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
 
@@ -350,26 +359,77 @@
 
           <!-- Card Columns Example Social Feed-->
           <div class="mb-0 mt-4">
-            <i class="fa fa-newspaper-o"></i> See where your friends are!</div>
+            <i class="fa fa-newspaper-o"></i> Update where you are!</div>
           <hr class="mt-2">
           <div class="card-columns">
 
 
-
             <!-- Example Social Card-->
-            <div class="card mb-3">
+            <div class="card-sm-6">
               <a href="#">
                 <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=610" alt="">
               </a>
               <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">David Duan</a></h6>
-                <div class="card-body py-2 small" >
-                LOCATION: 
-                </div>
-                <div class="card-body py-2 small">
-                DC Libarary
-                  <a href="#">#dead</a>
-                </div>
+
+<!-- drop -->
+<!-- <div class="btn-group">
+    <button class="btn">Select Locations</button>
+    <button class="btn dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+       <li><a tabindex="-1" href="#">Item I</a></li>
+       <li><a tabindex="-1" href="#">Item II</a></li>
+       <li><a tabindex="-1" href="#">Item III</a></li>
+       <li class="divider"></li>
+       <li><a tabindex="-1" href="#">Other</a></li>
+    </ul>
+</div> -->
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("select.nav-link").change(function(){
+        var selectedCountry = $(".nav-link option:selected").val();
+        alert("You have selected " + selectedCountry);
+    });
+});
+</script>
+
+<form>
+        <label><strong>Location:</strong></label>
+        <select class="nav-link dropdown-toggle mr-xl-1" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+            <option value="DC" aria-labelledby="messagesDropdown">DC</option>
+            <option value="DP" aria-labelledby="messagesDropdown">DP</option>
+            <option value="NRB" aria-labelledby="messagesDropdown">NRB</option>
+        </select>
+    </form> <a class="dropdown-item" href="frequentlocation.html" position="sticky">
+              View all locations
+            </a>
+            <div class="dropdown-divider"></div>
+
+
+<!-- <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+            <a class="dropdown-item" href="#">
+              <strong>DC LIBRARY</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <strong>DP LIBRARY</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <strong>NRB STUDY ROOM</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item small" href="#">View all locations</a>
+          </div>
+        </li> -->
+        <input type="submit" class="btn btn-info" value="Submit" position: "" style="height:50px; width:500px">
               </div>
               <hr class="my-0">
 
@@ -421,27 +481,60 @@
                   </div>
                 </div>
               </div> -->
-              <div class="card-footer small text-muted">Posted 32 mins ago</div>
+              <div class="card-footer small text-muted">Updated 32 mins ago</div>
             </div>
 
-
-
             <!-- Example Social Card-->
+
             <div class="card mb-3">
+
               <a href="#">
                 <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=180" alt="">
               </a>
               <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">Emilyyyyy Ye</a></h6>
-                <div class="card-body py-2 small" >
-                LOCATION: 
-                </div>
-                <div class="card-body py-2 small">
-                DP Libarary
-                  <a href="#">#starvingaf #OnADiet</a>
-                </div>
+
+      <label><strong>Status:</strong></label>
+<!-- <form>
+        <select class="nav-link dropdown-toggle mr-xl-1" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+            <option value="COME" aria-labelledby="messagesDropdown">COME BY TO VISIT!</option>
+              <i class="fa fa-fw fa-circle" style="color:#6DA733;"></i>
+            <option value="BUSY" aria-labelledby="messagesDropdown">BUSY BUT AVAILABLE</option>
+            <option value="DEAD" aria-labelledby="messagesDropdown">DO NOT DISTURBE</option>
+        </select>
+    </form>  -->
+                <!-- drop-status -->
+              <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-fw fa-circle" style="color:#6DA733;"></i>
+              <strong>COME BY TO VISIT!</strong>
+              <div class="dropdown-message small">Need memes</div>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-fw fa-circle" style="color:#DE872F;"></i>
+              <strong>BUSY BUT AVAILABLE</strong>
+              <div class="dropdown-message small">Need a hug</div>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <i class="fa fa-fw fa-circle" style="color:#C14242;"></i>
+              <strong>DO NOT DISTURB</strong>
+              <div class="dropdown-message small">DEAD MODE ACTIVATED</div>
+            </a>
+            <div class="dropdown-divider"></div>
+        </li>
+<input type="submit" class="btn btn-info" value="Submit" position: "">
               </div>
               <hr class="my-0">
+
 
 
               <!-- <div class="card-body py-2 small">
@@ -472,14 +565,14 @@
                   </div>
                 </div>
               </div> -->
-              <div class="card-footer small text-muted">Posted 46 mins ago</div>
+              <div class="card-footer small text-muted">Updated 46 mins ago</div>
             </div>
 
 
 
 
             <!-- Example Social Card-->
-            <div class="card mb-3">
+            <!-- <div class="card mb-3">
               <a href="#">
                 <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=281" alt="">
               </a>
@@ -495,12 +588,12 @@
               </div>
               <hr class="my-0">
               <div class="card-footer small text-muted">Posted 1 hr ago</div>
-            </div>
+            </div> -->
 
 
 
             <!-- Example Social Card-->
-            <div class="card mb-3">
+<!--              <div class="card mb-3">
               <a href="#">
                 <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=185" alt="">
               </a>
@@ -517,10 +610,10 @@
               <hr class="my-0">
               <div class="card-footer small text-muted">Posted yesterday</div>
             </div>
-          </div>
-          <!-- /Card Columns-->
+          </div> -->
+          <!-- /Card Columns
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4"> -->
 
 
           <!-- Example Pie Chart Card-->
@@ -535,7 +628,7 @@
 
 
           <!-- Example Notifications Card-->
-          <div class="card mb-5">
+<!--           <div class="card mb-5">
             <div class="card-header">
               <i class="fa fa-bell-o"></i> Friends' Activities</div>
             <div class="list-group list-group-flush small">
@@ -585,7 +678,7 @@
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Example DataTables Card-->
       <!-- <div class="card mb-3">
         <div class="card-header">
@@ -1085,7 +1178,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Copyright © Your Website 2018</small>
+          <small>Copyright © Aleph 2018</small>
         </div>
       </div>
     </footer>
