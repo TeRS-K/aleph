@@ -1,0 +1,26 @@
+#Site settings
+title: ""
+email: ""
+description: > # this means to ignore newlines until "baseurl:"
+    A light-weight web application made to ease communication between friends
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "" # the base hostname & protocol for your site
+
+# User setting
+owner: ""
+email: ""
+facebook_username: ""
+twitter_username: ""
+github_username: ""
+address:
+    - line: 200 University Ave
+    - line: Waterloo Ontario
+# Feel free to add more lines here 
+telephone: ""
+copyright: ""
+
+# API settings
+google_api_key: AIzaSyCdZFrK6YoYsulKMaGSI0gnRoKGItdN-PY
+
+# Build settings
+markdown: kramdown
