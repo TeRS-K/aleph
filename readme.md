@@ -1,1 +1,27 @@
-read me
+what does this app even do
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+boo
